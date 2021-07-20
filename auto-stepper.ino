@@ -9,8 +9,10 @@
 #define STEP_SPEED 12
 
 #define DELAY_READ 500
+#define DELAY_CHECK 200
 #define INTERRUPT_PIN 2
-volatile bool running = false;
+bool running = false;
+
 volatile bool start = false;
 Stepper myStepper(STEP_REVOLUTION, 4, 5, 6, 7);
 
@@ -27,6 +29,7 @@ void loop() {
   if(start && !running){
     check();
   }
+  delay(DELAY_CHECK)
 }
 
 bool checkCorrectness(){
@@ -52,13 +55,13 @@ void check(){
   for(int i = 0; i < 6; i++){
     correct = checkCorrectness();
     if(!correct){
-      Serial.println("Pezzo errato");
+      Serial.println("Incorrect measure");
       break;
     }
     moveMotor(i);
   }
-  Serial.println("check completed");
-  if(correct) Serial.println("Pezzo OK"); else Serial.println("Pezzo NC");
+  Serial.println("Check completed");
+  if(correct) Serial.println("Piece OK"); else Serial.println("Piece NC");
   Serial.flush();
   running = false;
 }

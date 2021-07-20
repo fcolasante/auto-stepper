@@ -29,7 +29,7 @@ void loop() {
   if(start && !running){
     check();
   }
-  delay(DELAY_CHECK)
+  delay(DELAY_CHECK);
 }
 
 bool checkCorrectness(){
